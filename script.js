@@ -57,7 +57,26 @@ function checkLength(input, min, max) {
   }
 }
 
-// Check Password
+// Check Password for 1 Uppercase, 1 Lowercase, and a Number
+function checkPassword(input) {
+  const reNumber = /[0-9]/;
+  const reUpper = /[A-Z]/;
+  const reLower = /[a-z]/;
+
+  if (input.value.length < 6) {
+    showError(input, 'Must contain at least six characters');
+  } else if (!input.value.match(reLower)) {
+    showError(input, 'Must contain at least one lowercase letter');
+  } else if (!input.value.match(reUpper)) {
+    showError(input, 'Must contain at least one uppercase letter');
+  } else if (!input.value.match(reNumber)) {
+    showError(input, 'Must contain at least one number');
+  } else {
+    showSuccess(input);
+  }
+}
+
+// Check Confirm Password matches Password
 function checkPasswordMatch(input1, input2) {
   if (input1.value !== input2.value) {
     showError(input2, 'Passwords do not match');
@@ -75,7 +94,7 @@ form.addEventListener('submit', function(e) {
 
   checkRequired([username, email, password, password2]);
   checkLength(username, 3, 15);
-  checkLength(password, 6, 25);
+  checkPassword(password);
   checkEmail(email);
   checkPasswordMatch(password, password2);
 });
